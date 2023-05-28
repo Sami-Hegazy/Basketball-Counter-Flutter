@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TeamBody extends StatelessWidget {
-  String teamName;
-  int teamNumber;
-  VoidCallback onPressPlusOne;
-  VoidCallback onPressPlusTwo;
-  VoidCallback onPressPlusThree;
-  TeamBody({
+  final String teamName;
+  final int teamNumber;
+  final VoidCallback onPressPlusOne;
+  final VoidCallback onPressPlusTwo;
+  final VoidCallback onPressPlusThree;
+  const TeamBody({
     Key? key,
     required this.teamName,
     required this.teamNumber,
@@ -21,36 +22,36 @@ class TeamBody extends StatelessWidget {
       children: [
         Text(
           teamName,
-          style: const TextStyle(
-            fontSize: 35,
+          style: TextStyle(
+            fontSize: 35.sp,
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 14),
+        14.verticalSpace,
         Container(
-          padding: const EdgeInsets.all(4),
-          margin: const EdgeInsets.all(4),
+          padding: const EdgeInsets.all(4).w,
+          margin: const EdgeInsets.all(4).w,
           alignment: Alignment.center,
-          height: 200,
-          width: 120,
+          height: 200.h,
+          width: 120.w,
           child: Text(
             '$teamNumber',
             style: TextStyle(
-              fontSize: teamNumber <= 9 ? 170 : 65,
+              fontSize: teamNumber <= 9.sp ? 170.sp : 90.sp,
               fontWeight: FontWeight.bold,
               color: teamNumber == 0 ? Colors.red : Colors.blueAccent,
             ),
           ),
         ),
         SizedBox(
-          height: 40,
-          width: 140,
+          height: 40.h,
+          width: 140.w,
           child: ElevatedButton(
             onPressed: onPressPlusOne,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 30,
+              padding: EdgeInsets.symmetric(
+                horizontal: 30.w,
               ),
             ),
             child: const FittedBox(
@@ -59,16 +60,16 @@ class TeamBody extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 14),
+        14.verticalSpace,
         SizedBox(
-          height: 40,
-          width: 140,
+          height: 40.h,
+          width: 140.w,
           child: ElevatedButton(
             onPressed: onPressPlusTwo,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 30,
+              padding: EdgeInsets.symmetric(
+                horizontal: 30.w,
               ),
             ),
             child: const FittedBox(
@@ -77,16 +78,16 @@ class TeamBody extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 14),
+        14.verticalSpace,
         SizedBox(
-          height: 40,
-          width: 140,
+          height: 40.h,
+          width: 140.w,
           child: ElevatedButton(
             onPressed: onPressPlusThree,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 30,
+              padding: EdgeInsets.symmetric(
+                horizontal: 30.w,
               ),
             ),
             child: const FittedBox(
@@ -96,7 +97,7 @@ class TeamBody extends StatelessWidget {
                 )),
           ),
         ),
-        const SizedBox(height: 14),
+        14.verticalSpace
       ],
     );
   }

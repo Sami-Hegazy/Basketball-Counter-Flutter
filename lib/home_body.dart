@@ -1,5 +1,11 @@
-import 'package:basketball_counter/team_body.dart';
+import 'package:basketball_counter/cupit/counter_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:basketball_counter/team_body.dart';
+
+import 'cupit/counter_state.dart';
 
 class HomeBody extends StatelessWidget {
   const HomeBody({super.key});
@@ -9,13 +15,15 @@ class HomeBody extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        const RowElement(),
+        RowElement(),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            BlocProvider.of<CounterCubit>(context).counterReset();
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.orange,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 50,
+            padding: EdgeInsets.symmetric(
+              horizontal: 50.sp,
             ),
           ),
           child: const Text('Reset'),
@@ -25,68 +33,62 @@ class HomeBody extends StatelessWidget {
   }
 }
 
-class RowElement extends StatefulWidget {
-  const RowElement({super.key});
-
-  @override
-  State<RowElement> createState() => _RowElementState();
-}
-
-class _RowElementState extends State<RowElement> {
-  int teamAPoints = 0;
-  int teamBPoints = 0;
+class RowElement extends StatelessWidget {
+  const RowElement({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        TeamBody(
-          onPressPlusOne: () {
-            setState(() {
-              teamAPoints++;
-            });
-          },
-          onPressPlusTwo: () {
-            setState(() {
-              teamAPoints += 2;
-            });
-          },
-          onPressPlusThree: () {
-            setState(() {
-              teamAPoints += 3;
-            });
-          },
-          teamNumber: teamAPoints,
-          teamName: 'Team A',
-        ),
-        const SizedBox(
-          height: 450,
-          child: VerticalDivider(
-            color: Colors.grey,
-            indent: 50,
-            endIndent: 50,
-          ),
-        ),
-        TeamBody(
-          onPressPlusOne: () {
-            setState(() {
-              teamBPoints++;
-            });
-          },
-          onPressPlusTwo: () {
-            setState(() {
-              teamBPoints += 2;
-            });
-          },
-          onPressPlusThree: () {
-            setState(() {
-              teamBPoints += 3;
-            });
-          },
-          teamNumber: teamBPoints,
-          teamName: 'Team B',
-        ),
-      ],
+    return BlocConsumer<CounterCubit, CounterState>(
+      builder: (context, state) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TeamBody(
+              onPressPlusOne: () {
+                BlocProvider.of<CounterCubit>(context)
+                    .counterIncrement(teamName: "A", buttonNumber: 1);
+              },
+              onPressPlusTwo: () {
+                BlocProvider.of<CounterCubit>(context)
+                    .counterIncrement(teamName: "A", buttonNumber: 2);
+              },
+              onPressPlusThree: () {
+                BlocProvider.of<CounterCubit>(context)
+                    .counterIncrement(teamName: "A", buttonNumber: 3);
+              },
+              teamNumber: BlocProvider.of<CounterCubit>(context).teamAPoints,
+              teamName: 'Team A',
+            ),
+            const SizedBox(
+              height: 450,
+              child: VerticalDivider(
+                color: Colors.grey,
+                indent: 50,
+                endIndent: 50,
+              ),
+            ),
+            TeamBody(
+              onPressPlusOne: () {
+                BlocProvider.of<CounterCubit>(context)
+                    .counterIncrement(teamName: "B", buttonNumber: 1);
+              },
+              onPressPlusTwo: () {
+                BlocProvider.of<CounterCubit>(context)
+                    .counterIncrement(teamName: "B", buttonNumber: 2);
+              },
+              onPressPlusThree: () {
+                BlocProvider.of<CounterCubit>(context)
+                    .counterIncrement(teamName: "B", buttonNumber: 3);
+              },
+              teamNumber: BlocProvider.of<CounterCubit>(context).teamBPoints,
+              teamName: 'Team B',
+            ),
+          ],
+        );
+      },
+      listener: (context, state) {
+        if (state is CounterAIncrementState) {
+        } else {}
+      },
     );
   }
 }
